@@ -6,7 +6,20 @@ This project demonstrates a declarative data pipeline using a YAML configuration
 The pipeline performs an ETL (Extract, Transform, Load) process on a local dataset. It reads transaction records, applies a Python-based filter to isolate high-value transactions, and outputs the result in JSON format.
 
 ## 2. Setup & Dataset
-Create a local file named `transactions.csv` in your environment (e.g., `/home/gauravjainn/`).
+Create a local file named `transactions.csv` in your environment (e.g., `/home/gauravjain/`).
+
+### Python Installation & Dependencies
+Run the following commands to set up your environment and install the necessary libraries:
+
+```
+# Create a virtual environment using Python
+python -m venv beam_env
+
+# Activate the virtual environment
+source beam_env/bin/activate
+
+# Install Apache Beam with YAML support
+pip install "apache-beam[yaml]"
 
 ### Input Data (`transactions.csv`)
 | transaction_id | item | category | amount |
@@ -19,15 +32,17 @@ Create a local file named `transactions.csv` in your environment (e.g., `/home/g
 
 ---
 
-## 3. Pipeline Configuration
-The pipeline logic is defined in the following configuration. It uses a **Filter** transform to only keep records where the amount is greater than 100.
+```
+
+## 3. Pipeline Code
+The pipeline logic is defined in the following configuration YMAL file. It uses a **Filter** transform to only keep records where the amount is greater than 100.
 
 ```yaml
 pipeline:
   transforms:
     - type: ReadFromCsv
       config:
-        path: /home/gauravjainn/transactions.csv
+        path: /home/gauravjain/transactions.csv
 
     - type: Filter
       config:
@@ -38,5 +53,5 @@ pipeline:
 
     - type: WriteToJson
       config:
-        path: /home/gauravjainn/transaction.json
+        path: /home/gauravjain/transaction.json
       input: Filter
